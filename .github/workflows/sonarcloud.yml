@@ -17,15 +17,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
         with:
-          sdk: stable
+          flutter-version: 'stable'
+
+      - name: Check Flutter version
+        run: flutter --version
 
       - name: Install dependencies
-        run: dart pub get
+        run: flutter pub get  # Ensure this is lowercase
+
+      - name: Install SonarScanner
+        run: flutter pub global activate sonar-scanner
 
       - name: Run SonarCloud Analysis
-        run: dart pub global run sonar-scanner
+        run: |
+          export PATH="$PATH":"$HOME/.pub-cache/bin"
+          sonar-scanner
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Ensure this matches your GitHub secret
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
