@@ -1,4 +1,4 @@
-name: SonarCloud Analysis
+name: SonarCloud
 
 on:
   push:
@@ -9,23 +9,13 @@ on:
       - main
 
 jobs:
-  build:
-    name: SonarCloud Scan
-    runs-on: ubuntu-latest
-
+  sonarcloud:
+    docker:
+      - image: sonarsource/sonar-scanner-cli
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Dart
-        uses: dart-lang/setup-dart@v1
-        with:
-          sdk: stable
-
-      - name: Install dependencies
-        run: dart pub get
-
-      - name: Run SonarCloud Analysis
-        run: dart pub global run sonar-scanner
+      - name: SonarCloud Scan
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Ensure this matches your GitHub secret
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: sonar-scanner
