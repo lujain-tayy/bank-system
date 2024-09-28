@@ -1,0 +1,7 @@
+sonar.projectKey=lujain-tayy_bank-system
+sonar.organization=lujain-tayy
+sonar.host.url=https://sonarcloud.io
+sonar.login=17252cf577508f3de471b6db3285dd762c806a94
+sonar.sources=lib
+sonar.language=dart
+sonar.sourceEncoding=UTF-8
