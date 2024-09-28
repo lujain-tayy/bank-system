@@ -15,7 +15,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: SonarCloud Scan
+
+      - name: Set up Dart
+        uses: dart-lang/setup-dart@v1
+        with:
+          sdk: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Run SonarCloud Analysis
+        run: dart pub global run sonar-scanner
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: sonar-scanner
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Ensure this matches your GitHub secret
